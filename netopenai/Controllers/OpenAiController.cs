@@ -35,7 +35,7 @@ namespace OpenAiController.Controllers
             };
             
             var requestBody = Newtonsoft.Json.JsonConvert.SerializeObject(request);
-            string openAiKey = "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";//这里填写 ChatGTP 的 API key 
+            string openAiKey = "";//这里填写 ChatGTP 的 API key 
             string openAiUrl = "https://api.openai.com/v1/completions";
             ResponseInfo result = new ();
 
