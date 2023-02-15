@@ -1,0 +1,55 @@
+﻿<html>
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>聊天</title>
+    <link href="./cs/style.css" rel="stylesheet" type="text/css" />
+    <script src="./js/jquery.min.js"></script>
+    <script type="text/javascript">
+            function button() {
+                var Text = $("#Text").val();
+                var url = "http://localhost:5075/api/OpenAi?info=" + Text;
+                var now = new Date();
+                var hour = now.getHours();
+                var minute = now.getMinutes();
+                $("#Addresse").append("<div class='message my_message'><p> " + Text + " <br> <span>" + hour + ":" + minute + "</span> </p></div>");
+                $("#Text").val("");
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    async: true,
+                    success: function (result) {
+                        var data = result.choices[0].text;
+                        $("#Addresse").append("<div class='message frnd_message'><p> " + data + " <br> <span>" + hour + ":" + minute + "</span> </p></div>");
+                    }
+                });
+            }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="rightSide">
+            <div class="header">
+                <div class="imgText">
+                    <div class="userimg">
+                        <img src="./images/img.png" class="cover">
+                    </div>
+                    <h4>Open AI<br><span>在线</span></h4>
+                </div>
+            </div>
+            <!--chatbox-->
+            <div class="chatBox" id="Addresse" style="height:700px;"></div>
+
+            <!--chat input-->
+            <div class="chatbox_input">
+                <div style="text-align: center;">
+                    <input type="text" id="Text" onkeydown="if(event.keyCode==13) button();">
+                    <button type="button" class="userimg" onclick="button()">发送</button>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
